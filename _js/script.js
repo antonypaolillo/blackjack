@@ -206,7 +206,7 @@ var init = {
 	
 	},
 	whoWins:function(){
-		/*If the sum of the dealer's hand is lower than 16 he must hit.
+		/*
 		*/
 		var win;
 		var dval = init.getHandValue(init.dealerHand);

@@ -5,12 +5,12 @@
 
 --> Currently shuffling at end of every round, needs to be only at 50-75% of deck.
 
---> if the dealer is beating the player, he should not hit(Currently hits below 17).
+--> if dealer is beating player he should not hit even when below 17.
 --> dealer should hit on a "soft 17"(an Ace and a 6), and stand on a "hard 17"(an Ace and a 10 value card).
 
 --> Split doubles functionality
 
---> localStorage save settings(money, name).
+--> localStorage save your bet to continue game later.
 
 --> Change player name
 */
@@ -118,6 +118,7 @@ var init = {
 	},
 	getHandValue:function(hand){
 		/* Get sum of all cards in hand,
+		assume hand is an array of card numbers,
 		use favorable value for Ace.
 		*/
 		var handValue=0;
@@ -153,7 +154,7 @@ var init = {
 	},
 	interactivePlay:function(stand){
 		/* User initiated play, 
-		if sum of cards is less than 21, user can either add a card or end their turn.
+		if sum of cards is less than 21, user can either add card || end turn.
 			*/
 		if(init.getHandValue(init.player.hand) < 21 && stand === false){
 			$(".hit").bind("click", function(){
@@ -190,6 +191,8 @@ var init = {
 			init.payBets();
 			init.resetHand();
 			
+			//$(".bJackOutput").append(init.infoString);
+			//init.infoString = "";
 		}
 	},
 	dealerPlay:function(){
@@ -203,7 +206,8 @@ var init = {
 	
 	},
 	whoWins:function(){
-		
+		/*If the sum of the dealer's hand is lower than 16 he must hit.
+		*/
 		var win;
 		var dval = init.getHandValue(init.dealerHand);
 		var pval = init.getHandValue(init.player.hand);
@@ -287,7 +291,6 @@ var init = {
 		if(init.player.bet){
 			init.player.money -= init.player.bet;
 			$(".funds").html("Funds Remaining: $"+init.player.money);
-			
 			e.currentTarget.style.display = "none";
 			$(".hit, .stand").css("display","block");
 
